@@ -17,7 +17,7 @@ You can use the math module if necessary.
 """
 
 
-from typing import Tuple, List
+from typing import Tuple, List, Dict
 import csv
 import math
 
@@ -26,11 +26,6 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     start index and an end index corresponding to the range of
     """
-    # if page is 1, start at 0 and end at page_size
-    # if page is 2, start at ((page-1) * page_size) and
-    # end at (page_size * page)
-    # if page is 3, start at ((page-1) * page_size) and
-    # end at (page_size * page)
     return ((page-1) * page_size, page_size * page)
 
 
@@ -67,53 +62,19 @@ class Server:
             return data[start:end]
         except IndexError:
             return []
-
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
-        """returns a dictionary containing the following key-value pairs
+def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """Retrieves information about a page.
         """
-<<<<<<< HEAD
-        returns details of a page
-        """
-        page_index = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.__dataset) / page_size)
-=======
-        assert type(page) is int and page > 0
-        assert type(page_size) is int and page_size > 0
-
         page_data = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.dataset()) / page_size)
-
->>>>>>> 51199ca8ccb2d9017515cb184bcd914d8c8901dd
         start, end = index_range(page, page_size)
-
-        # checking for next page if exist
-        if (page < total_pages):
-            next_page = page+1
-        else:
-            next_page = None
-
-        # checking if the current page exists
-        if (page == 1):
-            prev_page = None
-        else:
-            prev_page = page - 1
-<<<<<<< HEAD
-        page_details = {
-                'page_size': len(page_index),
-                'page': page,
-                'data': data,
-                'next_page': next_page,
-                'prev_page': prev_page,
-                'total_pages': total_pages,
-=======
-
-        page_detail =  {
+        total_pages = math.ceil(len(self.__dataset) / page_size)
+        page_info = {
             'page_size': len(page_data),
             'page': page,
-            'data': data,
-            'next_page': next_page,
-            'prev_page': prev_page,
-            'total_pages': total_pages
->>>>>>> 51199ca8ccb2d9017515cb184bcd914d8c8901dd
+            'data': page_data,
+            'next_page': page + 1 if end < len(self.__dataset) else None,
+            'prev_page': page - 1 if start > 0 else None,
+            'total_pages': total_pages,
         }
-        return page_detail
+        return page_info
+    
