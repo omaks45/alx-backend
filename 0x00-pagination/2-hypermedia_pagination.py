@@ -62,7 +62,8 @@ class Server:
             return data[start:end]
         except IndexError:
             return []
-def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """Retrieves information about a page.
         """
         page_data = self.get_page(page, page_size)
@@ -77,4 +78,3 @@ def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
             'total_pages': total_pages,
         }
         return page_info
-    
