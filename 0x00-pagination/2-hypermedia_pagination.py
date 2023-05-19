@@ -51,8 +51,7 @@ class Server:
         """
         returns details of a page
         """
-       # assert type(page_size) is int and page_size > 0
-        data = self.get_page(page, page_size)
+        page_index = self.get_page(page, page_size)
         total_pages = math.ceil(len(self.__dataset) / page_size)
         start, end = index_range(page, page_size)
         # check the next if available
@@ -66,7 +65,7 @@ class Server:
         else:
             prev_page = page - 1
         page_details = {
-                'page_size': len(data),
+                'page_size': len(page_index),
                 'page': page,
                 'data': data,
                 'next_page': next_page,
